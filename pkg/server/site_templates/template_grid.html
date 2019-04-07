@@ -1,0 +1,30 @@
+{{define "content"}}
+<div class="row">
+    {{range $id, $templ := . }}
+    <div class="card-column">
+        <div class="col pt-3">
+            <div class="card" style="width: 18rem; height: 20rem;">
+                    <div class="card-header">{{$templ.Name}}</div>
+                <div class="card-body overflow-auto">
+                    <p class="card-text">{{ $templ.Template }}</p>
+                </div>
+                <div class="card-footer text-right">
+                        <a href="{{ $templ.DetailUrl }}" class="btn btn-primary">Use this</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="col pt-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    No Templates found
+                </h5>
+                <p class="card-text">Put some in the templates folder</p>
+            </div>
+        </div>
+    </div>
+    {{end}}
+</div>
+{{end}}

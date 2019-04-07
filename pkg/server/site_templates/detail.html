@@ -1,0 +1,43 @@
+{{define "content"}}
+<div class="row pt-3">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Variables
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {{range $key, $value := .Template.Variables }}
+                    <div class="form-group">
+                        <label for="{{$key}}">{{$key}}</label>
+                        <input type="text" name="{{$key}}" class="form-control" id="{{$key}}" value="{{$value}}">
+                    </div>
+                    {{end}}
+                    <hr>
+                    <div class="form-group">
+                            <label for="copies">Copies</label>
+                            <input type="number" name="copies" class="form-control" id="copies" value=1>
+                        </div>
+                    <div class="float-right">
+                        <button type="submit" name="action" value="preview" class="btn btn-secondary">Preview</button>
+                        <button type="submit" name="action" value="pdf" class="btn btn-info">PDF</button>
+                        <button type="submit" name="action" value="print" class="btn btn-primary">Print</button>
+                    </div>
+                    <br>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col mx-auto">
+        <div class="card">
+            <div class="card-header">
+                Preview
+            </div>
+            <div class="card-body">
+                {{.Rendered}}
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

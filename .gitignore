@@ -1,0 +1,8 @@
+*
+!.gitignore
+!cmd
+!cmd/**/*
+!go.mod
+!pkg
+!pkg/**/*
+!packages.json
