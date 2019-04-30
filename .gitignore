@@ -6,3 +6,4 @@
 !pkg
 !pkg/**/*
 !packages.json
+!LICENSE
