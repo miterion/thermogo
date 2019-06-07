@@ -27,6 +27,7 @@ func Run(port int) {
 	// initialize content boxes
 	bootstrapBox := packr.New("bootstrap", "../../node_modules/bootstrap/dist")
 	jqueryBox := packr.New("jquery", "../../node_modules/jquery/dist")
+	vueBox := packr.New("vue", "../../node_modules/vue/dist")
 	pagesBox = packr.New("pages", "./site_templates")
 
 	initializeHTMLTemplates([]string{"template_grid", "404", "detail"})
@@ -36,6 +37,7 @@ func Run(port int) {
 	router.HandleFunc("/", indexHandler)
 	router.PathPrefix("/static/bootstrap/").Handler(http.StripPrefix("/static/bootstrap/", http.FileServer(bootstrapBox)))
 	router.PathPrefix("/static/jquery/").Handler(http.StripPrefix("/static/jquery/", http.FileServer(jqueryBox)))
+	router.PathPrefix("/static/vue/").Handler(http.StripPrefix("/static/vue/", http.FileServer(vueBox)))
 	router.HandleFunc("/template/{name}", detailHandler).Name("detail")
 	router.NotFoundHandler = http.HandlerFunc(errorHandler)
 	srv := &http.Server{

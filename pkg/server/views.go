@@ -2,7 +2,6 @@ package server
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	"html/template"
 	"log"
 	"net/http"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	t "text/template"
+
+	"github.com/gorilla/mux"
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -90,17 +91,17 @@ func renderThermoTemplate(templ *ThermoTemplate, preview bool) template.HTML {
 	}
 	var b strings.Builder
 	if preview {
-		rendTempl.Execute(&b, highlightVars(&templ.Variables))
+		rendTempl.Execute(&b, vueTemplate(&templ.Variables))
 	} else {
 		rendTempl.Execute(&b, templ.Variables)
 	}
 	return template.HTML(b.String())
 }
 
-func highlightVars(vars *map[string]string) map[string]string {
+func vueTemplate(vars *map[string]string) map[string]string {
 	ret := make(map[string]string)
-	for key, value := range *vars {
-		ret[key] = fmt.Sprintf("<strong>%s</strong>", value)
+	for key, _ := range *vars {
+		ret[key] = fmt.Sprintf("$%s$", key)
 	}
 	return ret
 }

@@ -12,8 +12,8 @@ var testTemplate = ThermoTemplate{
 }
 
 func TestHighlightVars(t *testing.T) {
-	res := highlightVars(&testTemplate.Variables)
-	correct := map[string]string{"testvar": "<strong>exampleval</strong>"}
+	res := vueTemplate(&testTemplate.Variables)
+	correct := map[string]string{"testvar": "$testvar$"}
 	if res["testvar"] != correct["testvar"] {
 		t.Error("expected", correct["testvar"], "got", res["testvar"])
 	}

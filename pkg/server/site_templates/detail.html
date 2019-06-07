@@ -1,5 +1,6 @@
 {{define "content"}}
-<div class="row pt-3">
+<script src="/static/vue/vue.min.js"></script>
+<div class="row pt-3" id="app">
     <div class="col">
         <div class="card">
             <div class="card-header">
@@ -10,7 +11,7 @@
                     {{range $key, $value := .Template.Variables }}
                     <div class="form-group">
                         <label for="{{$key}}">{{$key}}</label>
-                        <input type="text" name="{{$key}}" class="form-control" id="{{$key}}" value="{{$value}}">
+                        <input type="text" name="{{$key}}" class="form-control" id="{{$key}}" v-model="{{$key}}">
                     </div>
                     {{end}}
                     <hr>
@@ -40,4 +41,15 @@
         </div>
     </div>
 </div>
+<script >
+    var app = new Vue({
+        delimiters: ['$', '$'],
+        el: '#app',
+        data: {
+            {{range $key, $value := .Template.Variables }}
+            {{$key}}: '{{$value}}',
+            {{ end }}
+        }
+    });
+</script>
 {{end}}
