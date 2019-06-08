@@ -1,14 +1,11 @@
 package server
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"sort"
 	"strconv"
-	"strings"
-	t "text/template"
 
 	"github.com/gorilla/mux"
 )
@@ -20,7 +17,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var examples []renderedTemplates
 	for _, templ := range thermotempl {
-		renderedThermoTemplate := renderThermoTemplate(&templ, false)
+		renderedThermoTemplate := templ.renderThermoTemplate(false)
 		url, _ := router.Get("detail").URL("name", templ.Name)
 		examples = append(examples, renderedTemplates{
 			templ.Name, renderedThermoTemplate, url.String()})
@@ -59,49 +56,24 @@ func detailHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		if r.PostForm.Get("action") == "pdf" {
 			w.Header().Set("Content-type", "application/pdf")
-			GeneratePDF(string(renderThermoTemplate(&templ, false)), w)
+			GeneratePDF(string(templ.renderThermoTemplate(false)), w)
 		} else if r.PostForm.Get("action") == "print" {
 			copies, err := strconv.Atoi(r.PostForm.Get("copies"))
 			if err != nil {
 				copies = 1
 			}
-			Print(string(renderThermoTemplate(&templ, false)), copies)
+			Print(string(templ.renderThermoTemplate(false)), copies)
 			url, _ := router.Get("detail").URL("name", templ.Name)
 			http.Redirect(w, r, url.String(), 301)
 		} else {
 			templates["detail"].Execute(w, struct {
 				Template ThermoTemplate
 				Rendered template.HTML
-			}{templ, renderThermoTemplate(&templ, true)})
+			}{templ, templ.renderThermoTemplate(true)})
 		}
 
 	} else {
 		errorHandler(w, r)
 	}
 
-}
-
-// helper functions
-
-func renderThermoTemplate(templ *ThermoTemplate, preview bool) template.HTML {
-	rendTempl, err := t.New(templ.Name).Parse(templ.Template)
-	if err != nil {
-		log.Println(err)
-		return template.HTML("")
-	}
-	var b strings.Builder
-	if preview {
-		rendTempl.Execute(&b, vueTemplate(&templ.Variables))
-	} else {
-		rendTempl.Execute(&b, templ.Variables)
-	}
-	return template.HTML(b.String())
-}
-
-func vueTemplate(vars *map[string]string) map[string]string {
-	ret := make(map[string]string)
-	for key, _ := range *vars {
-		ret[key] = fmt.Sprintf("$%s$", key)
-	}
-	return ret
 }

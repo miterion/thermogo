@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
+	t "text/template"
 )
 
 // ThermoTemplate is the basic struct for saving templates.
@@ -73,4 +75,29 @@ func parseMetadata(name, templatestring string) (ThermoTemplate, error) {
 	return ThermoTemplate{
 		name, variables, split[2],
 	}, nil
+}
+
+func (templ ThermoTemplate) renderThermoTemplate(preview bool) template.HTML {
+	rendTempl, err := t.New(templ.Name).Parse(templ.Template)
+	if err != nil {
+		log.Println(err)
+		return template.HTML("")
+	}
+	var b strings.Builder
+	if preview {
+		rendTempl.Execute(&b, vueTemplate(&templ.Variables))
+	} else {
+		rendTempl.Execute(&b, templ.Variables)
+	}
+	return template.HTML(b.String())
+}
+
+// helper functions
+
+func vueTemplate(vars *map[string]string) map[string]string {
+	ret := make(map[string]string)
+	for key, _ := range *vars {
+		ret[key] = fmt.Sprintf("$%s$", key)
+	}
+	return ret
 }

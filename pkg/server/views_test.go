@@ -21,17 +21,17 @@ func TestHighlightVars(t *testing.T) {
 
 func TestRenderThermoTemplate(t *testing.T) {
 	brokenTemplate := ThermoTemplate{"", nil, "{{define test}}"}
-	if res := renderThermoTemplate(&brokenTemplate, false); res != "" {
+	if res := brokenTemplate.renderThermoTemplate(false); res != "" {
 		t.Error("expected empty string, got", res)
 	}
 
-	resNormal := renderThermoTemplate(&testTemplate, false)
+	resNormal := testTemplate.renderThermoTemplate(false)
 	correctNormal := template.HTML("<h1>Testing</h1><br>exampleval")
 	if resNormal != correctNormal {
 		t.Error("expected ", correctNormal, "got ", resNormal)
 	}
-	resPreview := renderThermoTemplate(&testTemplate, true)
-	correctPreview := template.HTML("<h1>Testing</h1><br><strong>exampleval</strong>")
+	resPreview := testTemplate.renderThermoTemplate(false)
+	correctPreview := template.HTML("<h1>Testing</h1><br>$exampleval$")
 	if resNormal != correctNormal {
 		t.Error("expected ", correctPreview, "got ", resPreview)
 	}
