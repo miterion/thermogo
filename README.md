@@ -2,7 +2,8 @@
 
 Webinterface for printing preconfigured html templates to a thermoprinter
 
-## Usage
+## Installation and Usage
 ```
-go run cmd/thermogo/main.go -port 3000
+go get -v github.com/miterion/thermogo
+go run $GOPATH/src/github.com/miterion/thermogo/cmd/thermogo/main.go -port 3000
 ```
