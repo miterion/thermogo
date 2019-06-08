@@ -1,5 +1,13 @@
 {{define "content"}}
 <script src="/static/vue/vue.min.js"></script>
+<style>
+    .highlight {
+        background-color: rgb(255, 224, 167);
+    }
+    .previewtext {
+        transition: all 0.5s ease-in-out;
+    }
+</style>
 <div class="row pt-3" id="app">
     <div class="col">
         <div class="card">
@@ -11,14 +19,15 @@
                     {{range $key, $value := .Template.Variables }}
                     <div class="form-group">
                         <label for="{{$key}}">{{$key}}</label>
-                        <input type="text" name="{{$key}}" class="form-control" id="{{$key}}" v-model="{{$key}}">
+                        <input v-on:focus="highlight" v-on:focusout="unhighlight" type="text" name="{{$key}}"
+                            class="form-control" id="{{$key}}" v-model="{{$key}}">
                     </div>
                     {{end}}
                     <hr>
                     <div class="form-group">
-                            <label for="copies">Copies</label>
-                            <input type="number" name="copies" class="form-control" id="copies" value=1>
-                        </div>
+                        <label for="copies">Copies</label>
+                        <input type="number" name="copies" class="form-control" id="copies" value=1>
+                    </div>
                     <div class="float-right">
                         <button type="submit" name="action" value="preview" class="btn btn-secondary">Preview</button>
                         <button type="submit" name="action" value="pdf" class="btn btn-info">PDF</button>
@@ -41,14 +50,22 @@
         </div>
     </div>
 </div>
-<script >
+<script>
     var app = new Vue({
         delimiters: ['$', '$'],
         el: '#app',
+        methods: {
+            highlight: function (event) {
+                document.querySelector('#prev-' + event.target.name).classList.add('highlight');
+            },
+            unhighlight: function (event) {
+                document.querySelector('#prev-' + event.target.name).classList.remove('highlight');
+            }
+        },
         data: {
-            {{range $key, $value := .Template.Variables }}
-            {{$key}}: '{{$value}}',
-            {{ end }}
+            {{ range $key, $value:= .Template.Variables }}
+    {{ $key }}: '{{$value}}',
+        {{ end }}
         }
     });
 </script>
