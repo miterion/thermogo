@@ -1,4 +1,5 @@
 # thermogo
+[![Build Status](https://travis-ci.com/miterion/thermogo.svg?branch=master)](https://travis-ci.com/miterion/thermogo)
 
 Webinterface for printing preconfigured html templates to a thermoprinter
 
