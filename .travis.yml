@@ -1,7 +1,7 @@
 language: go
 
 script:
-  - go test -coverprofile=coverage.out -v ./...
+  - env GO111MODULE=on go test -coverprofile=coverage.out -v ./...
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
