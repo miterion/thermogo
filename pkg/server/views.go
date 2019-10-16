@@ -63,14 +63,11 @@ func detailHandler(w http.ResponseWriter, r *http.Request) {
 				copies = 1
 			}
 			Print(string(templ.renderThermoTemplate(false)), copies)
-			url, _ := router.Get("detail").URL("name", templ.Name)
-			http.Redirect(w, r, url.String(), 301)
-		} else {
-			templates["detail"].Execute(w, struct {
-				Template ThermoTemplate
-				Rendered template.HTML
-			}{templ, templ.renderThermoTemplate(true)})
 		}
+		templates["detail"].Execute(w, struct {
+		Template ThermoTemplate
+		Rendered template.HTML
+		}{templ, templ.renderThermoTemplate(true)})
 
 	} else {
 		errorHandler(w, r)
