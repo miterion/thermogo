@@ -39,6 +39,7 @@ func Run(port int) {
 	router.PathPrefix("/static/jquery/").Handler(http.StripPrefix("/static/jquery/", http.FileServer(jqueryBox)))
 	router.PathPrefix("/static/vue/").Handler(http.StripPrefix("/static/vue/", http.FileServer(vueBox)))
 	router.HandleFunc("/template/{name}", detailHandler).Name("detail")
+	router.PathPrefix("/media/").Handler(http.StripPrefix("/media/", http.FileServer(http.Dir("media"))))
 	router.NotFoundHandler = http.HandlerFunc(errorHandler)
 	srv := &http.Server{
 		Handler: router,

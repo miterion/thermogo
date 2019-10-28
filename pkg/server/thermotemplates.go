@@ -85,8 +85,11 @@ func (templ ThermoTemplate) renderThermoTemplate(preview bool) template.HTML {
 	}
 	var b strings.Builder
 	if preview {
-		rendTempl.Execute(&b, vueTemplate(&templ.Variables))
+		renderedVariables := vueTemplate(&templ.Variables)
+		renderedVariables["media"] = "..//media/"
+		rendTempl.Execute(&b, renderedVariables)
 	} else {
+		templ.Variables["media"] = "http://localhost:3000//media/"
 		rendTempl.Execute(&b, templ.Variables)
 	}
 	return template.HTML(b.String())
