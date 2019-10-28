@@ -9,3 +9,5 @@
 !LICENSE
 !README.md
 !.travis.yml
+!templates
+!templates/*
