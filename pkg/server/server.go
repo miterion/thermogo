@@ -13,7 +13,7 @@ import (
 type renderedTemplates struct {
 	Name      string
 	Template  template.HTML
-	DetailUrl string
+	DetailURL string
 }
 
 var pagesBox *packr.Box

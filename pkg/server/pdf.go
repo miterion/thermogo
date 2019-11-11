@@ -17,6 +17,7 @@ func embedhead(html string) string {
 	return fmt.Sprintf(head, html)
 }
 
+// GeneratePDF renders an html string to pdf and writes it out.
 func GeneratePDF(html string, w io.Writer) {
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
@@ -35,7 +36,7 @@ func GeneratePDF(html string, w io.Writer) {
 		log.Println(err)
 	}
 }
-
+// Print renders the given html string and prints it on the "Thermodrucker"
 func Print(html string, copies int) {
 	var pdfBuilder bytes.Buffer
 	GeneratePDF(html, &pdfBuilder)
