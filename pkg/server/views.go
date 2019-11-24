@@ -18,7 +18,11 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	var examples []renderedTemplates
 	for _, templ := range thermotempl {
 		renderedThermoTemplate := templ.renderThermoTemplate(false)
-		url, _ := router.Get("detail").URL("name", templ.Name)
+		url, err := router.Get("detail").URL("name", templ.Name)
+		if err != nil {
+			log.Panic(err)
+			return
+		}
 		examples = append(examples, renderedTemplates{
 			templ.Name, renderedThermoTemplate, url.String()})
 	}
@@ -65,8 +69,8 @@ func detailHandler(w http.ResponseWriter, r *http.Request) {
 			Print(string(templ.renderThermoTemplate(false)), copies)
 		}
 		templates["detail"].Execute(w, struct {
-		Template ThermoTemplate
-		Rendered template.HTML
+			Template ThermoTemplate
+			Rendered template.HTML
 		}{templ, templ.renderThermoTemplate(true)})
 
 	} else {
