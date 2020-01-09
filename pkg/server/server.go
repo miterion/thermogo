@@ -25,7 +25,7 @@ var router *mux.Router
 // Run starts the server on the specified port.
 func Run(port int) {
 	// initialize content boxes
-	bootstrapBox := packr.New("bootstrap", "../../node_modules/bootstrap/dist")
+	bootstrapBox := packr.New("bootstrap", "../../node_modules/bootswatch/dist")
 	jqueryBox := packr.New("jquery", "../../node_modules/jquery/dist")
 	vueBox := packr.New("vue", "../../node_modules/vue/dist")
 	pagesBox = packr.New("pages", "./site_templates")
