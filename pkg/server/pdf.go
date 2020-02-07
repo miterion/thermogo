@@ -26,7 +26,7 @@ func GeneratePDF(html string, w io.Writer) {
 	pdfg.Dpi.Set(300)
 	pdfg.Grayscale.Set(true)
 	pdfg.PageWidth.Set(72)
-	pdfg.PageHeight.Set(200)
+	pdfg.PageHeight.Set(100)
 	pdfg.AddPage(wkhtmltopdf.NewPageReader(strings.NewReader(embedhead(html))))
 
 	pdfg.SetOutput(w)
