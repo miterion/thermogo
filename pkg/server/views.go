@@ -11,6 +11,7 @@ import (
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	sess, _ := sessionStore.Get(r, "notifications")
 	thermotempl, err := GetTemplates()
 	if err != nil {
 		log.Println(err)
@@ -27,7 +28,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 			templ.Name, renderedThermoTemplate, url.String()})
 	}
 	sort.Slice(examples, func(i, j int) bool { return examples[i].Name < examples[j].Name })
-	templates["template_grid"].Execute(w, examples)
+	templates["template_grid"].Execute(w, struct {Templates []renderedTemplates
+		Notifications []interface{} }{examples, sess.Flashes()})
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +45,7 @@ func detailHandler(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r)
 	}
 	vars := mux.Vars(r)
+	sess, err := sessionStore.Get(r, "notifications")
 
 	if templ, ok := thermotempl[vars["name"]]; ok {
 		if r.Method == "POST" {
@@ -66,12 +69,15 @@ func detailHandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				copies = 1
 			}
-			Print(string(templ.renderThermoTemplate(false)), copies)
+			sess.Save(r, w)
+			sess.AddFlash("Print job queued!")
+			go Print(string(templ.renderThermoTemplate(false)), copies)
 		}
 		templates["detail"].Execute(w, struct {
 			Template ThermoTemplate
 			Rendered template.HTML
-		}{templ, templ.renderThermoTemplate(true)})
+			Notifications []interface{}
+		}{templ, templ.renderThermoTemplate(true), sess.Flashes()})
 
 	} else {
 		errorHandler(w, r)

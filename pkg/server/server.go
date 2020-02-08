@@ -1,6 +1,7 @@
 package server
 
 import (
+	"os"
 	"html/template"
 	"log"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 	"github.com/gobuffalo/packr/v2"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 )
 
 type renderedTemplates struct {
@@ -21,6 +23,8 @@ var pagesBox *packr.Box
 var templates map[string]*template.Template
 
 var router *mux.Router
+
+var sessionStore = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
 
 // Run starts the server on the specified port.
 func Run(port int) {
@@ -54,7 +58,12 @@ func initializeHTMLTemplates(templateList []string) {
 	if err != nil {
 		panic(err)
 	}
+	notifyTmpl, err := pagesBox.FindString("notify.html")
+	if err != nil {
+		panic(err)
+	}
 	baseTemplate, _ := template.New("base").Parse(baseTemplateStr)
+	baseTemplate, _ = baseTemplate.Parse(notifyTmpl)
 	for _, t := range templateList {
 		templateStr, err := pagesBox.FindString(t + ".html")
 		if err != nil {

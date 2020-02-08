@@ -42,5 +42,6 @@ func Print(html string, copies int) {
 	GeneratePDF(html, &pdfBuilder)
 	cmd := exec.Command("lp", "-d", "Thermodrucker", "-n", strconv.Itoa(copies))
 	cmd.Stdin = &pdfBuilder
-	go cmd.Run()
+	out, _ := cmd.CombinedOutput()
+	fmt.Printf("%s",out)
 }

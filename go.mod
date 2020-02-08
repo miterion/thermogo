@@ -8,6 +8,7 @@ require (
 	github.com/gobuffalo/logger v1.0.2 // indirect
 	github.com/gobuffalo/packr/v2 v2.7.1
 	github.com/gorilla/mux v1.7.3
+	github.com/gorilla/sessions v1.2.0
 	github.com/rogpeppe/go-internal v1.5.0 // indirect
 	golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c // indirect
 	golang.org/x/sys v0.0.0-20191120155948-bd437916bb0e // indirect
