@@ -13,7 +13,7 @@ var testTemplate = ThermoTemplate{
 
 func TestHighlightVars(t *testing.T) {
 	res := vueTemplate(&testTemplate.Variables)
-	correct := map[string]string{"testvar": "<span class='previewtext' id='prev-testvar'>$testvar$</span>"}
+	correct := map[string]string{"testvar": "<span v-on:click='focusField' v-html='testvar' id='prev-testvar'></span>"}
 	if res["testvar"] != correct["testvar"] {
 		t.Error("expected", correct["testvar"], "got", res["testvar"])
 	}
