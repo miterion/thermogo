@@ -100,7 +100,7 @@ func (templ ThermoTemplate) renderThermoTemplate(preview bool) template.HTML {
 func vueTemplate(vars *map[string]string) map[string]string {
 	ret := make(map[string]string)
 	for key := range *vars {
-		ret[key] = fmt.Sprintf("<span v-html='%s' id='prev-%s'></span>", key, key)
+		ret[key] = fmt.Sprintf("<span v-on:click='focusField' v-html='%s' id='prev-%s'></span>", key, key)
 	}
 	return ret
 }

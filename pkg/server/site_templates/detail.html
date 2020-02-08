@@ -59,6 +59,9 @@
             },
             unhighlight: function (event) {
                 document.querySelector('#prev-' + event.target.name).classList.remove('highlight');
+            },
+            focusField: function (event) {
+                document.getElementById(event.target.id.split("-")[1]).focus();
             }
         },
         data: {
