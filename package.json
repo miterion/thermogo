@@ -10,7 +10,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "bootswatch": "^4.5.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "vue": "^2.6.11"
   }
 }
