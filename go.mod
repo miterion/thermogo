@@ -4,7 +4,6 @@ go 1.12
 
 require (
 	github.com/SebastiaanKlippert/go-wkhtmltopdf v1.6.0
-	github.com/gobuffalo/envy v1.9.0 // indirect
 	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/gorilla/mux v1.7.4
 	github.com/gorilla/sessions v1.2.0
