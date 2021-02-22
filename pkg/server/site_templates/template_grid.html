@@ -1,8 +1,8 @@
 {{define "content"}}
-<div class="row row-cols-1 row-cols-lg-5 justify-content-center justify-content-lg-start">
+<div class="row row-cols-1 row-cols-lg-4 justify-content-center justify-content-lg-start">
     {{range $id, $templ := .Templates }}
         <div class="col pt-3">
-            <div class="card shadow-sm" style="height: 20rem;">
+            <div class="card overview-card shadow-sm" style="height: 20rem;">
                     <div class="card-header">{{$templ.Name}}</div>
                 <div class="card-body overflow-auto">
                     <p class="card-text">{{ $templ.Template }}</p>
