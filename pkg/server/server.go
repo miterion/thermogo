@@ -1,12 +1,13 @@
 package server
 
 import (
-	"os"
+	"embed"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
-	"embed"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -42,6 +43,7 @@ func Run(port int, static *embed.FS) {
 		Handler: router,
 		Addr:    ":" + strconv.Itoa(port)}
 
+	fmt.Printf("Running server on http://localhost:%d\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
 
