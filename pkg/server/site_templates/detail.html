@@ -1,5 +1,5 @@
 {{define "content"}}
-<script src="/static/node_modules/vue/dist/vue.min.js"></script>
+<script src="/static/node_modules/vue/dist/vue.global.prod.js"></script>
 <style>
     .highlight {
         background-color: rgb(255, 224, 167);
@@ -50,25 +50,25 @@
     </div>
 </div>
 <script>
-    var app = new Vue({
+    const app = Vue.createApp({
         delimiters: ['$', '$'],
-        el: '#app',
         methods: {
-            highlight: function (event) {
+            highlight(event) {
                 document.querySelector('#prev-' + event.target.name).classList.add('highlight');
             },
-            unhighlight: function (event) {
+            unhighlight(event) {
                 document.querySelector('#prev-' + event.target.name).classList.remove('highlight');
             },
-            focusField: function (event) {
+            focusField(event) {
                 document.getElementById(event.target.id.split("-")[1]).focus();
             }
         },
-        data: {
+		    data() { return {
             {{ range $key, $value:= .Template.Variables }}
     {{ $key }}: '{{$value}}',
         {{ end }}
-        }
+			    }}
     });
+   app.mount('#app');
 </script>
 {{end}}
