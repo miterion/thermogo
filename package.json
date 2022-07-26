@@ -9,7 +9,7 @@
   "author": "Heiko Carrasco",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "bootswatch": "^4.6.1",
+    "bootswatch": "^4.6.2",
     "jquery": "^3.6.0",
     "vue": "^3.2.36"
   }
