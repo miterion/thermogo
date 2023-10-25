@@ -11,6 +11,6 @@
   "dependencies": {
     "bootswatch": "^4.6.2",
     "jquery": "^3.7.1",
-    "vue": "^3.3.5"
+    "vue": "^3.3.7"
   }
 }
